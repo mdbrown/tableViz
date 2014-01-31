@@ -28,27 +28,25 @@ tableViz <- function(x, colNames, rowNames, type){
   df$pos <- rep(0, nrow(df))
   
   #Plot the Data
-  g <- ggplot(df, aes(pos, pos)) + 
+  g <- ggplot(df, aes(x = Var1, y =Var2)) + 
        geom_point(aes(size = value), color = "grey80") + 
        theme_bw() + xlab("") + ylab("")
   g<- g + scale_size_continuous(range=c(10,25)) +
-    geom_text(aes(label = value, size=), size = 6) + theme(legend.position ="none") + facet_grid(Var2~Var1, scales="fixed")
+    geom_text(aes(label = value, size=), size = 6) + theme(legend.position ="none") 
+  #+ facet_grid(Var2~Var1, scales="fixed")
   g <- g + theme(axis.ticks = element_blank(), 
-            axis.text = element_blank(), 
             axis.line = element_blank(), 
             line = element_blank(), 
             panel.grid.minor = element_blank(), 
             text= element_text(size = 18, face="bold"), 
             strip.text.y = element_text(angle = 0), 
             strip.text.x = element_blank(), 
-            rect = element_blank())
+            panel.border=element_blank())
   
   
 
-  switch_facet_strip(g, "y")
-  grid.lines(c(0,1.5), c(0.05,0.05), gp = gpar(col = "darkgrey"), vp = viewport(layout.pos.row = 1, layout.pos.col = 1:4))
-  g = g + annotation_custom(grob = linesGrob(c(0,1), c(0.05,0.05), 
-                                             vp = viewport(layout.pos.row = 1)))
+ g = g + annotation_custom(grob = linesGrob(c(0,1), c(1,1))) +
+         annotation_custom(grob = linesGrob(c(0,0), c(0,1)))
   
   
 }
